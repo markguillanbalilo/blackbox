@@ -1,3 +1,6 @@
+#Install Grafana + Prometheus
+helm install prometheus-stack prometheus-community/kube-prometheus-stack -f values.yaml -n monitoring
+
 #Install Blackbox Exporter
 helm install blackbox-exporter prometheus-community/prometheus-blackbox-exporter -f blackbox-values.yaml -n monitoring
 
