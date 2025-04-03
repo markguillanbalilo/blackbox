@@ -1,16 +1,12 @@
-additionalScrapeConfigs:
-      - job_name: 'blackbox'
-        metrics_path: /probe
-        params:
-          module: [http_2xx]
-        static_configs:
-          - targets:
-              - https://example.com
-              - http://your-api-endpoint.com
-        relabel_configs:
-          - source_labels: [__address__]
-            target_label: __param_target
-          - source_labels: [__param_target]
-            target_label: instance
-          - target_label: __address__
-            replacement: blackbox-exporter:9115  # Change this if needed
+service:
+  type: ClusterIP
+
+config:
+  modules:
+    http_2xx:
+      prober: http
+      timeout: 5s
+      http:
+        valid_http_versions: [ "HTTP/1.1", "HTTP/2" ]
+        valid_status_codes: []  # Accept all 2xx codes
+        method: GET
