@@ -1,0 +1,26 @@
+config:
+ modules:
+  post_one_2xx:
+   prober: http
+   timeout: 5s
+   http:
+    method: POST
+    valid_status_codes: []
+    headers:
+     path: /prodrec/recommendation
+     requestId: product_recommendation
+     country: uk
+     num: 20
+     Origin: https://www.samsung.com
+    body: '{"pageType": "home"}'
+    preferred_ip_protocol: "ip4"
+    fail_if_body_not_matches_regexp: ["(.*modelList.*){4,}"]
+serviceMonitor:
+ enabled: true
+ defaults:
+  labels:
+   release: prometheus-operator
+ targets:
+  - name: prodreco.endpoint.post
+  url: https://api-recommender.bigdata.samsung.com/prodrec/recommendation
+  module: post_one_2xx
